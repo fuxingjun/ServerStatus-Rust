@@ -26,6 +26,9 @@ pub static G_EXPECT_FS: LazyLock<Vec<&'static str>> = LazyLock::new(|| {
     vec![
         "apfs",
         "hfs",
+        "overlay",
+        "overlayfs",
+        "squashfs",
         "ext4",
         "ext3",
         "ext2",
