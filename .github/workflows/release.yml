@@ -84,6 +84,12 @@ jobs:
           apt-get update -y -qq
           apt-get install -y -qq protobuf-compiler zip git llvm
 
+      - name: Cleanup broken Rust toolchain
+        run: |
+          rustup toolchain uninstall stable || true
+          rm -rf "$HOME/.rustup/toolchains/stable-x86_64-unknown-linux-gnu"
+          rm -rf "$HOME/.cargo"
+
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
