@@ -106,6 +106,7 @@ jobs:
             target/${{ matrix.platform.target }}/release/stat_server
             target/${{ matrix.platform.target }}/release/stat_client
           args: --best --lzma
+          strip: false
 
       - name: Zip Release
         uses: TheDoctor0/zip-release@0.7.6
@@ -153,13 +154,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install Protoc
-        run: |
-          if [ "${{ matrix.platform.os }}" = "windows-latest" ]; then
-            choco install protoc --no-progress
-          else
-            sudo apt-get update && sudo apt-get install -y protobuf-compiler
-          fi
-        shell: bash
+        uses: arduino/setup-protoc@v3
 
       - uses: dtolnay/rust-toolchain@stable
         with:
@@ -186,6 +181,7 @@ jobs:
             target/${{ matrix.platform.target }}/release/stat_server${{matrix.platform.suffix}}
             target/${{ matrix.platform.target }}/release/stat_client${{matrix.platform.suffix}}
           args: --best --lzma
+          strip: false
 
       # 修复：显式拷贝文件到统一目录，避免 Windows 打包找不到路径
       - name: Prepare Assets
